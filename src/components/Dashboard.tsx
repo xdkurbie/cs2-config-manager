@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Plus, FileDown, Upload, Trash2, Copy, User } from 'lucide-react';
+import { Search, Plus, FileDown, Upload, Trash2, Copy, User, Settings, Package, TrendingUp, Clock } from 'lucide-react';
 import { CS2Config } from '../types/config';
 import { useConfigStorage } from '../hooks/useConfigStorage';
 import { useFileHandlers } from '../hooks/useFileHandlers';
@@ -98,6 +98,62 @@ export function Dashboard({ configs, onConfigSelect }: DashboardProps) {
         </div>
       </div>
 
+      {/* Statistics Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="card stat-card" style={{ '--index': 0 }}>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-400">Total Configs</p>
+              <p className="text-2xl font-bold text-white">{configs.length}</p>
+            </div>
+            <div className="w-12 h-12 bg-[#de9b35]/20 rounded-lg flex items-center justify-center hover-glow">
+              <Settings size={24} className="text-[#de9b35]" />
+            </div>
+          </div>
+        </div>
+
+        <div className="card stat-card" style={{ '--index': 1 }}>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-400">Pro Presets</p>
+              <p className="text-2xl font-bold text-white">{configs.filter(c => c.isPreset).length}</p>
+            </div>
+            <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center hover-glow">
+              <User size={24} className="text-blue-500" />
+            </div>
+          </div>
+        </div>
+
+        <div className="card stat-card" style={{ '--index': 2 }}>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-400">Custom Configs</p>
+              <p className="text-2xl font-bold text-white">{configs.filter(c => !c.isPreset).length}</p>
+            </div>
+            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center hover-glow">
+              <Package size={24} className="text-green-500" />
+            </div>
+          </div>
+        </div>
+
+        <div className="card stat-card" style={{ '--index': 3 }}>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-400">Recently Updated</p>
+              <p className="text-2xl font-bold text-white">
+                {configs.filter(c => {
+                  const daysSinceUpdate = (Date.now() - new Date(c.updatedAt).getTime()) / (1000 * 60 * 60 * 24);
+                  return daysSinceUpdate <= 7;
+                }).length}
+              </p>
+            </div>
+            <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center hover-glow">
+              <Clock size={24} className="text-purple-500" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="card">
         <div className="flex flex-wrap gap-4 items-end">
           <div className="flex-1 min-w-[200px]">
@@ -176,12 +232,13 @@ export function Dashboard({ configs, onConfigSelect }: DashboardProps) {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredConfigs.map((config) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 staggered-list">
+          {filteredConfigs.map((config, index) => (
             <div
               key={config.id}
               onClick={() => onConfigSelect(config.id)}
-              className="group relative bg-[#0f0f0f] border border-gray-800 rounded-lg p-4 cursor-pointer hover:border-[#de9b35] transition-all hover:shadow-lg hover:shadow-[#de9b35]/10"
+              className="group relative bg-[#0f0f0f] border border-gray-800 rounded-lg p-4 cursor-pointer config-card hover:border-[#de9b35] transition-all hover:shadow-lg hover:shadow-[#de9b35]/10"
+              style={{ '--index': index }}
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1 min-w-0">
