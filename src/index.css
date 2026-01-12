@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0f0f0f] text-gray-100 antialiased;
+  }
+}
+
+@layer components {
+  .input {
+    @apply w-full bg-[#1b1b1b] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#de9b35] focus:ring-1 focus:ring-[#de9b35] transition-colors;
+  }
+  
+  .button {
+    @apply flex items-center justify-center space-x-2 px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#0f0f0f] focus:ring-[#de9b35];
+  }
+  
+  .button-primary {
+    @apply bg-[#de9b35] text-black hover:bg-[#e0a845];
+  }
+  
+  .button-secondary {
+    @apply bg-[#1b1b1b] text-gray-100 hover:bg-gray-800 border border-gray-700;
+  }
+  
+  .button-danger {
+    @apply bg-red-600 text-white hover:bg-red-700;
+  }
+  
+  .card {
+    @apply bg-[#1b1b1b] border border-gray-800 rounded-lg p-6;
+  }
+  
+  .tab {
+    @apply px-4 py-2 text-sm font-medium rounded-lg transition-colors;
+  }
+  
+  .tab-active {
+    @apply bg-[#de9b35] text-black;
+  }
+  
+  .tab-inactive {
+    @apply text-gray-400 hover:text-white hover:bg-gray-800;
+  }
+}
+
+input[type="range"] {
+  @apply w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  @apply w-4 h-4 bg-[#de9b35] rounded-full cursor-pointer appearance-none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  @apply w-4 h-4 bg-[#de9b35] rounded-full cursor-pointer border-none;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  @apply bg-[#1b1b1b];
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-lg;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
